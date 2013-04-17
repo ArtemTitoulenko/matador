@@ -81,6 +81,23 @@ var methods = {
       }
     })
   }
+, console: function () {
+    console.log('Matador console')
+    console.log('( to exit, type <CTRL>+<C> )')
+
+    var matador = require('../src/matador.js')
+      , env = process.env.NODE_ENV || 'development'
+      , argv = matador.argv
+      , config = require(process.cwd() + '/app/config/' + env)
+      , app = matador.createApp(process.cwd(), config, {})
+
+    var repl = require('repl').start('matador> ')
+    repl.context.app = app
+    repl.on('exit', function () {
+      process.exit()
+    })
+    return
+  }
 , help: function () {
     console.log("Matador - a clean, organized framework for Node.js\n")
     this.usage()
